@@ -66,6 +66,11 @@
                                                 <constraint firstItem="OqQ-nw-lhs" firstAttribute="top" secondItem="AUi-Og-PXk" secondAttribute="top" constant="4" id="y1t-Xa-LeM"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="cellImage" destination="OqQ-nw-lhs" id="luL-PO-rQC"/>
+                                            <outlet property="dateLabel" destination="dkl-Bl-oBS" id="hqa-4o-pcj"/>
+                                            <outlet property="likeButton" destination="agw-s4-lZF" id="gFD-ey-SKQ"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
