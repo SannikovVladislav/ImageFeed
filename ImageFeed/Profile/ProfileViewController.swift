@@ -73,6 +73,6 @@ final class ProfileViewController: UIViewController {
             exitButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16),
             exitButton.centerYAnchor.constraint(equalTo: userPhoto.centerYAnchor)
         ])
-        }
     }
+}
 
