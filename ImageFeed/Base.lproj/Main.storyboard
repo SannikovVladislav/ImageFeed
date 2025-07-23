@@ -113,18 +113,6 @@
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="3y9-ak-SPV">
                                         <rect key="frame" x="0.0" y="0.0" width="1600" height="1059"/>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aXF-uc-gG0" userLabel="Share Button">
-                                        <rect key="frame" x="182" y="795" width="50" height="50"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="1ZH-Br-yRf"/>
-                                            <constraint firstAttribute="width" constant="50" id="5LC-g2-k29"/>
-                                        </constraints>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" image="Sharing button"/>
-                                        <connections>
-                                            <action selector="didTapShareButton:" destination="EZZ-XV-eLr" eventType="touchUpInside" id="0uz-7U-TsB"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="3y9-ak-SPV" firstAttribute="top" secondItem="HBq-yp-9Xg" secondAttribute="top" id="4D5-AC-pN4"/>
@@ -150,15 +138,27 @@
                                     <action selector="didTapBackButton:" destination="EZZ-XV-eLr" eventType="touchUpInside" id="fmp-Ie-iXL"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aXF-uc-gG0" userLabel="Share Button">
+                                <rect key="frame" x="182" y="795" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="1ZH-Br-yRf"/>
+                                    <constraint firstAttribute="width" constant="50" id="5LC-g2-k29"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="Sharing button"/>
+                                <connections>
+                                    <action selector="didTapShareButton:" destination="EZZ-XV-eLr" eventType="touchUpInside" id="0uz-7U-TsB"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="VDJ-CL-iQv"/>
                         <color key="backgroundColor" name="YP Black (iOS)"/>
                         <constraints>
+                            <constraint firstItem="aXF-uc-gG0" firstAttribute="centerX" secondItem="VDJ-CL-iQv" secondAttribute="centerX" id="A1P-Dy-Yl6"/>
                             <constraint firstItem="HBq-yp-9Xg" firstAttribute="leading" secondItem="63o-xS-kfc" secondAttribute="leading" id="FPQ-Qs-sZZ"/>
                             <constraint firstAttribute="trailing" secondItem="HBq-yp-9Xg" secondAttribute="trailing" id="FuB-sp-9dj"/>
                             <constraint firstItem="yyf-q5-Z83" firstAttribute="leading" secondItem="VDJ-CL-iQv" secondAttribute="leading" constant="8" id="OU0-dV-qw1"/>
-                            <constraint firstItem="VDJ-CL-iQv" firstAttribute="bottom" secondItem="aXF-uc-gG0" secondAttribute="bottom" constant="17" id="VYA-rN-LeF"/>
-                            <constraint firstItem="aXF-uc-gG0" firstAttribute="centerX" secondItem="VDJ-CL-iQv" secondAttribute="centerX" id="eyu-mE-YXv"/>
+                            <constraint firstItem="VDJ-CL-iQv" firstAttribute="bottom" secondItem="aXF-uc-gG0" secondAttribute="bottom" constant="17" id="dTY-xo-1JY"/>
                             <constraint firstItem="HBq-yp-9Xg" firstAttribute="top" secondItem="63o-xS-kfc" secondAttribute="top" id="hRa-vi-G8M"/>
                             <constraint firstItem="yyf-q5-Z83" firstAttribute="top" secondItem="VDJ-CL-iQv" secondAttribute="top" constant="8" id="pz2-HO-aME"/>
                             <constraint firstAttribute="bottom" secondItem="HBq-yp-9Xg" secondAttribute="bottom" id="y3G-V1-XpF"/>
@@ -181,9 +181,11 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="IIJ-LZ-jrN">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" name="YP Black (iOS)"/>
-                        <color key="barTintColor" name="YP Black (iOS)"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="selectedImageTintColor" name="YP White (iOS)"/>
+                        <tabBarAppearance key="standardAppearance">
+                            <color key="backgroundColor" name="YP Black (iOS)"/>
+                        </tabBarAppearance>
                     </tabBar>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="Xqt-29-TDW"/>
