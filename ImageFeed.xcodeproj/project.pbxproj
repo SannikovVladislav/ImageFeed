@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		869714EA2E43BB4D0011C347 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 869714E92E43BB4D0011C347 /* WebKit.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		866756842E2528FA00B0E106 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		8667566D2E2528F900B0E106 /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		866756832E2528FA00B0E106 /* ImageFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8667568D2E2528FA00B0E106 /* ImageFeedUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageFeedUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		869714E92E43BB4D0011C347 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -65,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				869714EA2E43BB4D0011C347 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,6 +97,7 @@
 				8667566F2E2528F900B0E106 /* ImageFeed */,
 				866756862E2528FA00B0E106 /* ImageFeedTests */,
 				866756902E2528FA00B0E106 /* ImageFeedUITests */,
+				869714E82E43BB4C0011C347 /* Frameworks */,
 				8667566E2E2528F900B0E106 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -103,6 +110,14 @@
 				8667568D2E2528FA00B0E106 /* ImageFeedUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		869714E82E43BB4C0011C347 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				869714E92E43BB4D0011C347 /* WebKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
