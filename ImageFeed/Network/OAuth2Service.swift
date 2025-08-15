@@ -42,12 +42,13 @@ final class OAuth2Service {
     }
     
     func fetchOAuthToken(code: String, completion: @escaping (Result<String, Error>) -> Void) {
-        
         guard let request = makeOAuthTokenRequest(code: code) else {
-            completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
+            DispatchQueue.main.async {
+                completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
+            }
             return
         }
-        
+
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 print("Network error: \(error)")
@@ -56,12 +57,14 @@ final class OAuth2Service {
                 }
                 return
             }
-            
+
             guard let data = data else {
-                completion(.failure(NSError(domain: "No data", code: 0, userInfo: nil)))
+                DispatchQueue.main.async {
+                    completion(.failure(NSError(domain: "No data", code: 0, userInfo: nil)))
+                }
                 return
             }
-            
+
             guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
                 print("Invalid HTTP status code")
                 DispatchQueue.main.async {
@@ -69,7 +72,7 @@ final class OAuth2Service {
                 }
                 return
             }
-            
+
             do {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
