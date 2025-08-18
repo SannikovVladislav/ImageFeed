@@ -60,7 +60,7 @@ final class ProfileViewController: UIViewController {
         ])
         
         let exitButton = UIButton.systemButton(
-            with: UIImage(named: "Exit Button")!,
+            with: UIImage(named: "Exit Button") ?? UIImage(),
             target: self,
             action: #selector(method))
         exitButton.tintColor = UIColor(named: "YP Red (iOS)")
