@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		866438212E5363A30010C634 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 866438202E5363A30010C634 /* ProgressHUD */; };
 		869714EA2E43BB4D0011C347 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 869714E92E43BB4D0011C347 /* WebKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -71,6 +72,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				869714EA2E43BB4D0011C347 /* WebKit.framework in Frameworks */,
+				866438212E5363A30010C634 /* ProgressHUD in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,6 +142,7 @@
 			);
 			name = ImageFeed;
 			packageProductDependencies = (
+				866438202E5363A30010C634 /* ProgressHUD */,
 			);
 			productName = ImageFeed;
 			productReference = 8667566D2E2528F900B0E106 /* ImageFeed.app */;
@@ -222,7 +225,9 @@
 				Base,
 			);
 			mainGroup = 866756642E2528F900B0E106;
-			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				866437BB2E535E480010C634 /* XCRemoteSwiftPackageReference "ProgressHUD" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8667566E2E2528F900B0E106 /* Products */;
 			projectDirPath = "";
@@ -592,6 +597,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		866437BB2E535E480010C634 /* XCRemoteSwiftPackageReference "ProgressHUD" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/relatedcode/ProgressHUD";
+			requirement = {
+				kind = exactVersion;
+				version = 14.1.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		866438202E5363A30010C634 /* ProgressHUD */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 866437BB2E535E480010C634 /* XCRemoteSwiftPackageReference "ProgressHUD" */;
+			productName = ProgressHUD;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 866756652E2528F900B0E106 /* Project object */;
 }
