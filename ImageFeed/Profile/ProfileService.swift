@@ -20,20 +20,6 @@ final class ProfileService {
     private(set) var profile: Profile?
     private var lastToken: String?
     
-    
-    private func makeProfileRequest(token: String) -> URLRequest? {
-        guard let url = URL(string: "https://api.unsplash.com/me") else {
-            assertionFailure("❌ Failed to create URL")
-            return nil
-        }
-        
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        return request
-    }
-    
     func fetchProfile(token: String, completion: @escaping (Result<Profile, Error>) -> Void) {
         assert(Thread.isMainThread)
         
@@ -70,5 +56,18 @@ final class ProfileService {
         }
         self.task = task
         task.resume()
+    }
+    
+    private func makeProfileRequest(token: String) -> URLRequest? {
+        guard let url = URL(string: "https://api.unsplash.com/me") else {
+            assertionFailure("❌ Failed to create URL")
+            return nil
+        }
+        
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        return request
     }
 }

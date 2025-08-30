@@ -19,11 +19,11 @@ final class OAuth2TokenStorage {
             if let newValue = newValue {
                 let isSuccess = KeychainWrapper.standard.set(newValue, forKey: tokenKey)
                 if !isSuccess {
-                    assertionFailure(("❌ Failed to save token in Keychain"))
+                    assertionFailure("❌ Failed to save token in Keychain")
                 }
             } else {
-                let isSucceess = KeychainWrapper.standard.removeObject(forKey: tokenKey)
-                if !isSucceess {
+                let isSuccess = KeychainWrapper.standard.removeObject(forKey: tokenKey)
+                if !isSuccess {
                     assertionFailure("❌ Failed to delete token in Keychain")
                 }
             }

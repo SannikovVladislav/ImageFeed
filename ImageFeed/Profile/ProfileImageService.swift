@@ -25,9 +25,7 @@ final class ProfileImageService {
         if lastUsername == username { return }
         task?.cancel()
         lastUsername = username
-        
-        //print("Fetching profile image for username: \(username)")
-        
+            
         guard let request = makeProfileImageRequest(username: username) else {
             completion(.failure(ProfileServiceError.invalidRequest))
             return
@@ -40,7 +38,6 @@ final class ProfileImageService {
                 switch result {
                 case .success(let response):
                     let avatarURL = response.profileImage.small
-                    //print("Successfully fetched avatar URL: \(avatarURL)")
                     self.avatarURL = avatarURL
                     completion(.success(avatarURL))
                     

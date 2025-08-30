@@ -8,10 +8,10 @@
 import Foundation
 
 struct Profile {
-    var userName: String
-    var name: String
-    var loginName: String
-    var bio: String?
+    let userName: String
+    let name: String
+    let loginName: String
+    let bio: String?
     
     init(profileResult: ProfileResult){
         self.userName = profileResult.username

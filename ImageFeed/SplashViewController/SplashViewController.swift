@@ -8,7 +8,13 @@
 import UIKit
 
 final class SplashViewController: UIViewController {
-    private var splashImageView: UIImageView!
+    private lazy var splashImageView: UIImageView = {
+            let imageView = UIImageView()
+        imageView.image = UIImage(resource: .splashScreenLogo)
+            imageView.contentMode = .scaleAspectFit
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            return imageView
+        }()
     
     private let oauth2Service = OAuth2Service.shared
     private let oauth2TokenStorage = OAuth2TokenStorage()
@@ -27,7 +33,6 @@ final class SplashViewController: UIViewController {
             switchToTabBarController()
             fetchProfile(token)
         } else {
-            // Show Auth Screen
             showAuthenticationScreen()
         }
     }
@@ -85,12 +90,12 @@ final class SplashViewController: UIViewController {
         if #available(iOS 15.0, *) {
             let appearance = UITabBarAppearance()
             appearance.configureWithOpaqueBackground()
-            appearance.backgroundColor = UIColor(named: "YP Black (iOS)")
+            appearance.backgroundColor = UIColor(resource: .ypBlackIOS)
         }
     }
     
     private func setupUI(){
-        view.backgroundColor = UIColor(named: "YP Black (iOS)")
+        view.backgroundColor = UIColor(resource: .ypBlackIOS)
         
         setupSplashImage()
         setupConstraints()
@@ -99,7 +104,7 @@ final class SplashViewController: UIViewController {
     private func setupSplashImage() {
         splashImageView = UIImageView()
         splashImageView.translatesAutoresizingMaskIntoConstraints = false
-        splashImageView.image = UIImage(named: "splash_screen_logo")
+        splashImageView.image = UIImage(resource: .splashScreenLogo)
         view.addSubview(splashImageView)
     }
     
