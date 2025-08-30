@@ -22,7 +22,7 @@ final class ProfileImageService {
     func fetchProfileImageURL(username: String, completion: @escaping (Result<String, Error>) -> Void) {
         assert(Thread.isMainThread)
         
-        if lastUsername == username { return }
+        guard lastUsername == username else { return }
         task?.cancel()
         lastUsername = username
             
@@ -32,7 +32,6 @@ final class ProfileImageService {
         }
         
         let task = urlSession.objectTask(for: request) { [weak self] (result: Result<UserResult, Error>) in
-            DispatchQueue.main.async {
                 guard let self = self else { return }
                 
                 switch result {
@@ -53,7 +52,6 @@ final class ProfileImageService {
                     completion(.failure(error))
                 }
                 self.task = nil
-            }
         }
         self.task = task
         task.resume()

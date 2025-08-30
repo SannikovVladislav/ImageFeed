@@ -56,11 +56,11 @@ extension AuthViewController: WebViewViewControllerDelegate {
         UIBlockingProgressHUD.show()
         
         oauth2Service.fetchOAuthToken(code: code) { [weak self] result in
+            UIBlockingProgressHUD.dismiss()
+            
             guard let self else { return }
             
             DispatchQueue.main.async {
-                UIBlockingProgressHUD.dismiss()
-                
                 switch result {
                 case .success(let token):
                     self.tokenStorage.token = token

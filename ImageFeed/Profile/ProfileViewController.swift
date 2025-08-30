@@ -10,7 +10,6 @@ import Kingfisher
 
 final class ProfileViewController: UIViewController {
     
-    // MARK: - UI Elements
     private lazy var profilePhotoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(resource: .avatarPlaceholder)
@@ -55,12 +54,10 @@ final class ProfileViewController: UIViewController {
         return button
     }()
     
-    // MARK: - Dependencies
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     private var profileImageServiceObserver: NSObjectProtocol?
     
-    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -69,10 +66,8 @@ final class ProfileViewController: UIViewController {
         loadProfileData()
     }
     
-    // MARK: - Actions
     @objc private func didTapLogoutButton() {}
     
-    // MARK: - Private Methods
     private func setupUI() {
         view.backgroundColor = .ypBlackIOS
         [profilePhotoImageView, nameLabel, loginNameLabel, descriptionLabel, logoutButton].forEach {

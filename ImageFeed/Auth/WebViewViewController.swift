@@ -18,7 +18,7 @@ protocol WebViewViewControllerDelegate: AnyObject {
 
 final class WebViewViewController: UIViewController {
     
-    @IBOutlet weak var webView: WKWebView!
+    @IBOutlet private var webView: WKWebView!
     @IBOutlet private var progressView: UIProgressView!
     
     private var estimatedProgressObservation: NSKeyValueObservation?
@@ -51,8 +51,8 @@ final class WebViewViewController: UIViewController {
     private func configureBackButton() {
         navigationItem.hidesBackButton = true
         let backButton = UIButton(type: .system)
-        backButton.setImage(UIImage(named: "nav_back_button"), for: .normal)
-        backButton.tintColor = UIColor(named: "YP Black (iOS)")
+        backButton.setImage(UIImage(resource: .navBackButton), for: .normal)
+        backButton.tintColor = UIColor(resource: .ypBlackIOS)
         backButton.addTarget(self,
                              action: #selector(backButtonTapped),
                              for: .touchUpInside)
