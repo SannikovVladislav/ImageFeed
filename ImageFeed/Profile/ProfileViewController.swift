@@ -62,13 +62,13 @@ final class ProfileViewController: UIViewController {
             let profileImageURL = ProfileImageService.shared.avatarURL,
             let url = URL(string: profileImageURL)
         else {
-            // print("💅 avatar URL available, using placeholder")
+            // print("Avatar URL available, using placeholder")
             profilePhotoImageView.image = UIImage(named: "avatar_placeholder")
             return
         }
         profilePhotoImageView.kf.cancelDownloadTask()
         
-        // print("💅 Loading avatar from URL: \(url.absoluteString)")
+        // print("Loading avatar from URL: \(url.absoluteString)")
         let processor = RoundCornerImageProcessor(cornerRadius: 61)
         profilePhotoImageView.kf.setImage(with: url,
                                           placeholder: UIImage(named: "avatar_placeholder"),
@@ -81,9 +81,9 @@ final class ProfileViewController: UIViewController {
         //        { [weak self] result in
         //            switch result {
         //            case .success(let value):
-        //                print("💅 Avatar loaded successfully: \(value.source.url?.absoluteString ?? "")")
+        //                print("Avatar loaded successfully: \(value.source.url?.absoluteString ?? "")")
         //            case .failure(let error):
-        //                print("💅 Failed to load avatar: \(error.localizedDescription)")
+        //                print("Failed to load avatar: \(error.localizedDescription)")
         //                self?.profilePhotoImageView.image = UIImage(named: "avatar_placeholder")
         //            }
         //        }

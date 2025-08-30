@@ -53,38 +53,38 @@ final class OAuth2Service {
     }
     
     func fetchOAuthToken(code: String, completion: @escaping (Result<String, Error>) -> Void) {
-            assert(Thread.isMainThread)
-            
-            guard lastCode != code else {
-                completion(.failure(AuthServiceError.invalidRequest))
-                return
-            }
-            
-            task?.cancel()
-            self.task = nil
-            lastCode = code
-            
-            guard let request = makeOAuthTokenRequest(code: code) else {
-                completion(.failure(AuthServiceError.invalidRequest))
-                return
-            }
-            
-            let task = URLSession.shared.objectTask(for: request) { [weak self] (result: Result<OAuthTokenResponseBody, Error>) in
-                DispatchQueue.main.async {
-                    guard let self = self else { return }
-                    
-                    switch result {
-                    case .success(let response):
-                        completion(.success(response.accessToken))
-                    case .failure(let error):
-                        print("❌ [OAuth2Service] Network error: \(error.localizedDescription), code: \(code)")
-                        self.lastCode = nil
-                        completion(.failure(error))
-                    }
-                    self.task = nil
+        assert(Thread.isMainThread)
+        
+        guard lastCode != code else {
+            completion(.failure(AuthServiceError.invalidRequest))
+            return
+        }
+        
+        task?.cancel()
+        self.task = nil
+        lastCode = code
+        
+        guard let request = makeOAuthTokenRequest(code: code) else {
+            completion(.failure(AuthServiceError.invalidRequest))
+            return
+        }
+        
+        let task = URLSession.shared.objectTask(for: request) { [weak self] (result: Result<OAuthTokenResponseBody, Error>) in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                
+                switch result {
+                case .success(let response):
+                    completion(.success(response.accessToken))
+                case .failure(let error):
+                    print("❌ [OAuth2Service] Network error: \(error.localizedDescription), code: \(code)")
+                    self.lastCode = nil
+                    completion(.failure(error))
                 }
+                self.task = nil
             }
-            self.task = task
-            task.resume()
+        }
+        self.task = task
+        task.resume()
     }
 }

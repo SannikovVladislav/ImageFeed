@@ -52,13 +52,13 @@ extension URLSession {
             case .success(let data):
                 do {
                     let decodedObject = try decoder.decode(T.self, from: data)
-                        completion(.success(decodedObject))
+                    completion(.success(decodedObject))
                 } catch {
                     print("Decoding error: \(error.localizedDescription), data: \(String(data: data, encoding: .utf8) ?? "")")
-                        completion(.failure(error))
+                    completion(.failure(error))
                 }
             case .failure(let error):
-                    completion(.failure(error))
+                completion(.failure(error))
             }
         }
         return task

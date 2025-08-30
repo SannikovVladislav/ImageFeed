@@ -22,11 +22,22 @@ final class AuthViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == showWebViewSegueIdentifier {
-            guard let webViewVC = segue.destination as? WebViewViewController else { return }
-            webViewVC.delegate = self
+    @IBAction private func loginButtonTapped(_ sender: UIButton) {
+        showWebView()
+    }
+    
+    private func showWebView() {
+        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+        guard let webViewVC = storyboard.instantiateViewController(withIdentifier: "WebViewViewController") as? WebViewViewController else {
+            assertionFailure("Could not instantiate WebViewViewController")
+            return
         }
+        
+        webViewVC.delegate = self
+        
+        let navController = UINavigationController(rootViewController: webViewVC)
+        navController.modalPresentationStyle = .fullScreen
+        present(navController, animated: true)
     }
     
     private func showAuthErrorAlert() {

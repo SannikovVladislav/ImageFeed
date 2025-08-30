@@ -18,42 +18,29 @@ protocol WebViewViewControllerDelegate: AnyObject {
 
 final class WebViewViewController: UIViewController {
     
-    @IBOutlet weak var webView: WKWebView!    
+    @IBOutlet weak var webView: WKWebView!
     @IBOutlet private var progressView: UIProgressView!
+    
+    private var estimatedProgressObservation: NSKeyValueObservation?
     
     weak var delegate: WebViewViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        estimatedProgressObservation = webView.observe(
+            \.estimatedProgress,
+             options: [],
+             changeHandler: { [weak self] _, _ in
+                 guard let self = self else { return }
+                 self.updateProgress()
+             })
+        
         webView.navigationDelegate = self
         
         configureBackButton()
         loadAuthorizationPage()
         updateProgress()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        webView.addObserver(
-            self,
-            forKeyPath: #keyPath(WKWebView.estimatedProgress),
-            options: .new,
-            context: nil)
-        updateProgress()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), context: nil)
-    }
-    
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == #keyPath(WKWebView.estimatedProgress) {
-            updateProgress()
-        } else {
-            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
-        }
     }
     
     private func updateProgress() {

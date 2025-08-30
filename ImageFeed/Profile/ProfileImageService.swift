@@ -17,7 +17,7 @@ final class ProfileImageService {
     private let urlSession = URLSession.shared
     private var task: URLSessionTask?
     private var lastUsername: String?
-    private (set) var avatarURL: String?
+    private(set) var avatarURL: String?
     
     func fetchProfileImageURL(username: String, completion: @escaping (Result<String, Error>) -> Void) {
         assert(Thread.isMainThread)
@@ -26,7 +26,7 @@ final class ProfileImageService {
         task?.cancel()
         lastUsername = username
         
-        //print("💅 Fetching profile image for username: \(username)")
+        //print("Fetching profile image for username: \(username)")
         
         guard let request = makeProfileImageRequest(username: username) else {
             completion(.failure(ProfileServiceError.invalidRequest))
@@ -40,7 +40,7 @@ final class ProfileImageService {
                 switch result {
                 case .success(let response):
                     let avatarURL = response.profileImage.small
-                    //print("💅 Successfully fetched avatar URL: \(avatarURL)")
+                    //print("Successfully fetched avatar URL: \(avatarURL)")
                     self.avatarURL = avatarURL
                     completion(.success(avatarURL))
                     
@@ -79,4 +79,4 @@ final class ProfileImageService {
         return request
     }
 }
-    
+
