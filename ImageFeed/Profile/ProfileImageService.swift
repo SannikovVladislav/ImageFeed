@@ -22,7 +22,7 @@ final class ProfileImageService {
     func fetchProfileImageURL(username: String, completion: @escaping (Result<String, Error>) -> Void) {
         assert(Thread.isMainThread)
         
-        guard lastUsername == username else { return }
+        guard lastUsername != username else { return }
         task?.cancel()
         lastUsername = username
             

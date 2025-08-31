@@ -9,12 +9,12 @@ import UIKit
 
 final class SplashViewController: UIViewController {
     private lazy var splashImageView: UIImageView = {
-            let imageView = UIImageView()
+        let imageView = UIImageView()
         imageView.image = UIImage(resource: .splashScreenLogo)
-            imageView.contentMode = .scaleAspectFit
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-            return imageView
-        }()
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
     
     private let oauth2Service = OAuth2Service.shared
     private let oauth2TokenStorage = OAuth2TokenStorage()
