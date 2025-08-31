@@ -7,14 +7,57 @@
 
 import Foundation
 
+enum AuthServiceError: Error {
+    case invalidRequest
+}
+
 final class OAuth2Service {
+    
+    private let urlSession = URLSession.shared
+    private var task: URLSessionTask?
+    private var lastCode: String?
+    
     static let shared = OAuth2Service()
+    
     private init() {}
     
+    func fetchOAuthToken(code: String, completion: @escaping (Result<String, Error>) -> Void) {
+        assert(Thread.isMainThread)
+        
+        guard lastCode != code else {
+            completion(.failure(AuthServiceError.invalidRequest))
+            return
+        }
+        
+        task?.cancel()
+        self.task = nil
+        lastCode = code
+        
+        guard let request = makeOAuthTokenRequest(code: code) else {
+            completion(.failure(AuthServiceError.invalidRequest))
+            return
+        }
+        
+        let task = URLSession.shared.objectTask(for: request) { [weak self] (result: Result<OAuthTokenResponseBody, Error>) in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let response):
+                completion(.success(response.accessToken))
+            case .failure(let error):
+                print("❌ [OAuth2Service] Network error: \(error.localizedDescription), code: \(code)")
+                self.lastCode = nil
+                completion(.failure(error))
+            }
+            self.task = nil
+        }
+        self.task = task
+        task.resume()
+    }
     private func makeOAuthTokenRequest(code: String) -> URLRequest? {
         
-        guard let url = URL(string: "https://unsplash.com/oauth/token") else {
-            print("Invalid URL")
+        guard URL(string: "https://unsplash.com/oauth/token") != nil else {
+            assertionFailure("[OAuth2Service] Invalid URL")
             return nil
         }
         
@@ -32,61 +75,12 @@ final class OAuth2Service {
         ]
         urlComponents.queryItems = queryItems
         guard let url = urlComponents.url else {
-            print("Invalid URL components")
+            print("[OAuth2Service] Invalid URL components")
             return nil
         }
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         return request
-    }
-    
-    func fetchOAuthToken(code: String, completion: @escaping (Result<String, Error>) -> Void) {
-        guard let request = makeOAuthTokenRequest(code: code) else {
-            DispatchQueue.main.async {
-                completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
-            }
-            return
-        }
-
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print("Network error: \(error)")
-                DispatchQueue.main.async {
-                    completion(.failure(error))
-                }
-                return
-            }
-
-            guard let data = data else {
-                DispatchQueue.main.async {
-                    completion(.failure(NSError(domain: "No data", code: 0, userInfo: nil)))
-                }
-                return
-            }
-
-            guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
-                print("Invalid HTTP status code")
-                DispatchQueue.main.async {
-                    completion(.failure(NSError(domain: "Invalid response", code: 0, userInfo: nil)))
-                }
-                return
-            }
-
-            do {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let result = try decoder.decode(OAuthTokenResponseBody.self, from: data)
-                DispatchQueue.main.async {
-                    completion(.success(result.accessToken))
-                }
-            } catch {
-                print("Decoding error: \(error)")
-                DispatchQueue.main.async {
-                    completion(.failure(error))
-                }
-            }
-        }
-        task.resume()
     }
 }

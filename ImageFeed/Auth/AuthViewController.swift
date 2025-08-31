@@ -5,6 +5,8 @@
 //  Created by Владислав on 06.08.2025.
 //
 import UIKit
+import ProgressHUD
+
 
 protocol AuthViewControllerDelegate: AnyObject {
     func didAuthenticate(_ vc: AuthViewController)
@@ -20,25 +22,57 @@ final class AuthViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == showWebViewSegueIdentifier {
-            guard let webViewVC = segue.destination as? WebViewViewController else { return }
-            webViewVC.delegate = self
+    @IBAction private func loginButtonTapped(_ sender: UIButton) {
+        showWebView()
+    }
+    
+    private func showWebView() {
+        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+        guard let webViewVC = storyboard.instantiateViewController(withIdentifier: "WebViewViewController") as? WebViewViewController else {
+            assertionFailure("Could not instantiate WebViewViewController")
+            return
         }
+        
+        webViewVC.delegate = self
+        
+        let navController = UINavigationController(rootViewController: webViewVC)
+        navController.modalPresentationStyle = .fullScreen
+        present(navController, animated: true)
+    }
+    
+    private func showAuthErrorAlert() {
+        let alert = UIAlertController(
+            title: "Что-то пошло не так(",
+            message: "Не удалось войти в систему",
+            preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ОK", style: .default, handler: nil))
+        present(alert, animated: true)
     }
 }
 
 extension AuthViewController: WebViewViewControllerDelegate {
     
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
-        oauth2Service.fetchOAuthToken(code: code) { result in
-            switch result {
-            case .success(let token):
-                self.tokenStorage.token = token
-                self.delegate?.didAuthenticate(self)
-                print("Successfully fetched token: \(token)")
-            case .failure(let error):
-                print("Failed to fetch token: \(error)")
+        UIBlockingProgressHUD.show()
+        
+        oauth2Service.fetchOAuthToken(code: code) { [weak self] result in
+            UIBlockingProgressHUD.dismiss()
+            
+            guard let self else { return }
+            
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let token):
+                    self.tokenStorage.token = token
+                    self.delegate?.didAuthenticate(self)
+                    print("Successfully fetched token: \(token)")
+                    
+                case .failure(let error):
+                    print("❌Failed to fetch token: \(error)")
+                    vc.dismiss(animated: true) {
+                        self.showAuthErrorAlert()
+                    }
+                }
             }
         }
     }
