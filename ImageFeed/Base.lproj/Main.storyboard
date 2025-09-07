@@ -29,7 +29,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="273"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="OqQ-nw-lhs">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="OqQ-nw-lhs" userLabel="cellImageView">
                                                     <rect key="frame" x="16" y="4" width="382" height="265"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -46,6 +46,9 @@
                                                     </constraints>
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain" image="Active"/>
+                                                    <connections>
+                                                        <action selector="likeButtonClicked:" destination="669-Jj-7yK" eventType="touchUpInside" id="EIY-4q-1WK"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="16 Июля 2025" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dkl-Bl-oBS" userLabel="Date Label">
                                                     <rect key="frame" x="24" y="245" width="87.5" height="16"/>
@@ -68,7 +71,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="cellImage" destination="OqQ-nw-lhs" id="luL-PO-rQC"/>
+                                            <outlet property="cellImageView" destination="OqQ-nw-lhs" id="Yzc-NB-LhX"/>
                                             <outlet property="dateLabel" destination="dkl-Bl-oBS" id="hqa-4o-pcj"/>
                                             <outlet property="likeButton" destination="agw-s4-lZF" id="gFD-ey-SKQ"/>
                                         </connections>
@@ -111,7 +114,7 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HBq-yp-9Xg">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="3y9-ak-SPV">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="3y9-ak-SPV" userLabel="Single Image View">
                                         <rect key="frame" x="0.0" y="0.0" width="1600" height="1059"/>
                                     </imageView>
                                 </subviews>
@@ -167,8 +170,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="Wl0-Ag-rNb"/>
                     <connections>
-                        <outlet property="imageView" destination="3y9-ak-SPV" id="Mdl-d7-JKI"/>
                         <outlet property="scrollView" destination="HBq-yp-9Xg" id="hvf-c5-NM9"/>
+                        <outlet property="singleImageView" destination="3y9-ak-SPV" id="M56-Xr-bXO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3YF-o6-2TP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

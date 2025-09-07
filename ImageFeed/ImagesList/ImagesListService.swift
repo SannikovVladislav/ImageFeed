@@ -98,7 +98,6 @@ class ImagesListService {
         return request
         
     }
-    
     func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<Void, Error>) -> Void) {
         guard let token = OAuth2TokenStorage().token else {
             completion(.failure(ImagesListServiceError.invalidToken))
@@ -141,6 +140,7 @@ class ImagesListService {
         }
         task.resume()
     }
+    
     
     func deleteImageList() {
         photos.removeAll()
