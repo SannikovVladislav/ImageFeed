@@ -151,7 +151,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="Sharing button"/>
                                 <connections>
-                                    <action selector="didTapShareButton:" destination="EZZ-XV-eLr" eventType="touchUpInside" id="0uz-7U-TsB"/>
+                                    <action selector="didTapShareButton:" destination="EZZ-XV-eLr" eventType="touchUpInside" id="hH8-gV-jzd"/>
                                 </connections>
                             </button>
                         </subviews>

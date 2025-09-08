@@ -57,6 +57,7 @@ final class ProfileViewController: UIViewController {
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     private var profileImageServiceObserver: NSObjectProtocol?
+    let profileLogoutService = ProfileLogoutService.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +67,22 @@ final class ProfileViewController: UIViewController {
         loadProfileData()
     }
     
-    @objc private func didTapLogoutButton() {}
+    @objc func didTapLogoutButton() {
+        let alert = UIAlertController(
+            title: "Пока, пока!",
+            message: "Уверены, что хотите выйти?",
+            preferredStyle: .alert
+        )
+        alert.addAction(
+            UIAlertAction(title: "Нет", style: .cancel)
+        )
+        alert.addAction(
+            UIAlertAction(title: "Да", style: .destructive) { [weak self] _ in
+                self?.profileLogoutService.logout()
+            }
+        )
+        present(alert, animated: true)
+    }
     
     private func setupUI() {
         view.backgroundColor = .ypBlackIOS
