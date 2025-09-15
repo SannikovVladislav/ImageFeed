@@ -31,6 +31,9 @@
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="OqQ-nw-lhs" userLabel="cellImageView">
                                                     <rect key="frame" x="16" y="4" width="382" height="265"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="247" id="Lu7-kL-8Cs"/>
+                                                    </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                             <integer key="value" value="16"/>
@@ -56,12 +59,29 @@
                                                     <color key="textColor" name="YP White (iOS)"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LTt-3I-Nnx" userLabel="gradientView">
+                                                    <rect key="frame" x="16" y="239" width="382" height="30"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="tintColor" name="YP White (iOS)"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="fS1-g9-0gg"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadiusLeft">
+                                                            <integer key="value" value="16"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" name="YP Black (iOS)"/>
                                             <constraints>
+                                                <constraint firstItem="LTt-3I-Nnx" firstAttribute="leading" secondItem="OqQ-nw-lhs" secondAttribute="leading" id="7Rp-0e-SSw"/>
                                                 <constraint firstItem="OqQ-nw-lhs" firstAttribute="bottom" secondItem="dkl-Bl-oBS" secondAttribute="bottom" constant="8" id="8Gn-5J-7lX"/>
+                                                <constraint firstItem="LTt-3I-Nnx" firstAttribute="bottom" secondItem="OqQ-nw-lhs" secondAttribute="bottom" id="CJ9-KJ-jRX"/>
                                                 <constraint firstItem="OqQ-nw-lhs" firstAttribute="leading" secondItem="AUi-Og-PXk" secondAttribute="leading" constant="16" id="Oht-eW-b4L"/>
                                                 <constraint firstItem="OqQ-nw-lhs" firstAttribute="trailing" secondItem="agw-s4-lZF" secondAttribute="trailing" id="RsL-Ov-Njt"/>
+                                                <constraint firstItem="LTt-3I-Nnx" firstAttribute="trailing" secondItem="OqQ-nw-lhs" secondAttribute="trailing" id="UdL-Ql-eS2"/>
                                                 <constraint firstAttribute="bottom" secondItem="OqQ-nw-lhs" secondAttribute="bottom" constant="4" id="ZsC-6o-EuY"/>
                                                 <constraint firstItem="OqQ-nw-lhs" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="dkl-Bl-oBS" secondAttribute="trailing" constant="8" id="daY-6S-n8N"/>
                                                 <constraint firstItem="agw-s4-lZF" firstAttribute="top" secondItem="OqQ-nw-lhs" secondAttribute="top" id="oPC-0V-rzf"/>
@@ -73,6 +93,7 @@
                                         <connections>
                                             <outlet property="cellImageView" destination="OqQ-nw-lhs" id="Yzc-NB-LhX"/>
                                             <outlet property="dateLabel" destination="dkl-Bl-oBS" id="hqa-4o-pcj"/>
+                                            <outlet property="gradientView" destination="LTt-3I-Nnx" id="3Uq-Cw-K1h"/>
                                             <outlet property="likeButton" destination="agw-s4-lZF" id="gFD-ey-SKQ"/>
                                         </connections>
                                     </tableViewCell>

@@ -69,8 +69,8 @@ final class ProfileViewController: UIViewController {
     
     @objc func didTapLogoutButton() {
         let alert = UIAlertController(
-            title: "Пока, пока!",
-            message: "Уверены, что хотите выйти?",
+            title: "Пока, пока:(",
+            message: "Уже посмотрел все картинки?",
             preferredStyle: .alert
         )
         alert.addAction(

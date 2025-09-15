@@ -15,7 +15,6 @@ final class ProfileLogoutService {
     let imagesListService = ImagesListService.shared
     let oauth2TokenStorage = OAuth2TokenStorage.shared
     
-    
     private init() { }
     
     func logout() {
@@ -26,11 +25,11 @@ final class ProfileLogoutService {
         oauth2TokenStorage.deleteOAuth2Token()
         
         DispatchQueue.main.async {
-                    guard let window = UIApplication.shared.windows.first else { return }
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    let authVC = storyboard.instantiateViewController(withIdentifier: "AuthViewController")
+            guard let window = UIApplication.shared.windows.first else { return }
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let authVC = storyboard.instantiateViewController(withIdentifier: "AuthViewController")
             window.rootViewController = SplashViewController()
-                }
+        }
     }
     
     private func cleanCookies() {

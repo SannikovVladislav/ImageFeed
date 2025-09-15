@@ -20,12 +20,10 @@ class ImagesListService {
     static let shared = ImagesListService()
     private let urlSession = URLSession.shared
     private var task: URLSessionTask?
-    private let dateFormatter = ISO8601DateFormatter()
-    
+    private let dateFormatter = ISO8601DateFormatter()    
     private var lastLoadedPage: Int?
     private let perPage = 10
-    
-    
+        
     private init() {}
     
     func fetchPhotosNextPage() {
@@ -96,8 +94,8 @@ class ImagesListService {
         request.httpMethod = "GET"
         request.setValue("Bearer \(OAuth2TokenStorage().token ?? "")", forHTTPHeaderField: "Authorization")
         return request
-        
     }
+    
     func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<Void, Error>) -> Void) {
         guard let token = OAuth2TokenStorage().token else {
             completion(.failure(ImagesListServiceError.invalidToken))
@@ -130,17 +128,16 @@ class ImagesListService {
             
             DispatchQueue.main.async {
                 guard let self else { return }
-                            if let index = self.photos.firstIndex(where: { $0.id == photoId }) {
-                                var photo = self.photos[index]
-                                photo.isLiked = isLike
-                                self.photos[index] = photo
+                if let index = self.photos.firstIndex(where: { $0.id == photoId }) {
+                    var photo = self.photos[index]
+                    photo.isLiked = isLike
+                    self.photos[index] = photo
                     completion(.success(()))
                 }
             }
         }
         task.resume()
     }
-    
     
     func deleteImageList() {
         photos.removeAll()
