@@ -28,7 +28,6 @@ final class ImagesListCell: UITableViewCell {
         super.prepareForReuse()
         cellImageView.kf.cancelDownloadTask()
         cellImageView.image = nil
-        // fullsizeImageView.kf.cancelDownloadTask()
     }
     
     @IBAction private func likeButtonClicked(_ sender: UIButton) {
@@ -53,8 +52,8 @@ final class ImagesListCell: UITableViewCell {
     }
     
     func setLikeButtonImage(isLiked: Bool) {
-        let imageName = isLiked ? "Active" : "No Active"
-        likeButton.setImage(UIImage(named: imageName), for: .normal)
+        let imageResource: ImageResource = isLiked ? .active : .noActive
+        likeButton.setImage(UIImage(resource: imageResource), for: .normal)
     }
     
     func setupGradient() {

@@ -14,16 +14,22 @@ enum ImagesListServiceError: Error {
     case decodingError
 }
 
-class ImagesListService {
+enum HTTPMethod: String {
+    case get = "GET"
+    case post = "POST"
+    case delete = "DELETE"
+}
+
+final class ImagesListService {
     private(set) var photos: [Photo] = []
     static let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
     static let shared = ImagesListService()
     private let urlSession = URLSession.shared
     private var task: URLSessionTask?
-    private let dateFormatter = ISO8601DateFormatter()    
+    private let dateFormatter = ISO8601DateFormatter()
     private var lastLoadedPage: Int?
     private let perPage = 10
-        
+    
     private init() {}
     
     func fetchPhotosNextPage() {
@@ -37,40 +43,37 @@ class ImagesListService {
         }
         
         let task = urlSession.objectTask(for: request) { [weak self] (result: Result<[PhotoResult], Error>) in
-            DispatchQueue.main.async {
-                guard let self = self else { return }
-                
-                switch result {
-                case .success(let photoResults):
-                    let newPhotos = photoResults.map { photoResult in
-                        return Photo(id: photoResult.id,
-                                     size: CGSize(width: photoResult.width, height: photoResult.height),
-                                     createdAt: self.dateFormatter.date(from: photoResult.createdAt),
-                                     welcomeDescription: photoResult.description,
-                                     thumbImageURL: photoResult.urls.thumb,
-                                     largeImageURL: photoResult.urls.full,
-                                     isLiked: photoResult.likedByUser)
-                    }
-                    self.lastLoadedPage = nextPage
-                    self.photos.append(contentsOf: newPhotos)
-                    
-                    NotificationCenter.default.post(
-                        name: ImagesListService.didChangeNotification,
-                        object: self
-                    )
-                    
-                case .failure(let error):
-                    print("❌ [ImagesListService] Network error: \(error.localizedDescription)")
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let photoResults):
+                let newPhotos = photoResults.map { photoResult in
+                    return Photo(id: photoResult.id,
+                                 size: CGSize(width: photoResult.width, height: photoResult.height),
+                                 createdAt: self.dateFormatter.date(from: photoResult.createdAt),
+                                 welcomeDescription: photoResult.description,
+                                 thumbImageURL: photoResult.urls.thumb,
+                                 largeImageURL: photoResult.urls.full,
+                                 isLiked: photoResult.likedByUser)
                 }
-                self.task = nil
+                self.lastLoadedPage = nextPage
+                self.photos.append(contentsOf: newPhotos)
+                
+                NotificationCenter.default.post(
+                    name: ImagesListService.didChangeNotification,
+                    object: self
+                )
+            case .failure(let error):
+                print("❌ [ImagesListService] Network error: \(error.localizedDescription)")
             }
+            self.task = nil
         }
         self.task = task
         task.resume()
     }
     
     private func makePhotosRequest(page: Int, perPage: Int) -> URLRequest? {
-        guard let url = URL(string: "https://api.unsplash.com/photos") else {
+        guard URL(string: "https://api.unsplash.com/photos") != nil else {
             assertionFailure("[ImagesListService] Invalid URL")
             return nil
         }
@@ -90,8 +93,9 @@ class ImagesListService {
             return nil
         }
         
+        let requestMethod = HTTPMethod.get
         var request = URLRequest(url: url)
-        request.httpMethod = "GET"
+        request.httpMethod = requestMethod.rawValue
         request.setValue("Bearer \(OAuth2TokenStorage().token ?? "")", forHTTPHeaderField: "Authorization")
         return request
     }
@@ -119,13 +123,11 @@ class ImagesListService {
                 completion(.failure(error))
                 return
             }
-            
             guard let httpResponse = response as? HTTPURLResponse,
                   (200...299).contains(httpResponse.statusCode) else {
                 completion(.failure(ImagesListServiceError.invalidRequest))
                 return
             }
-            
             DispatchQueue.main.async {
                 guard let self else { return }
                 if let index = self.photos.firstIndex(where: { $0.id == photoId }) {

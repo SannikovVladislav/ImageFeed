@@ -112,7 +112,7 @@ extension ImagesListViewController: UITableViewDataSource {
         guard let imageListCell = cell as? ImagesListCell else { return UITableViewCell() }
         
         configCell(for: imageListCell, with: photos[indexPath.row])
-    
+        
         return imageListCell
     }
     private func configCell(for cell: ImagesListCell, with photo: Photo) {
@@ -152,6 +152,8 @@ extension ImagesListViewController: ImagesListCellDelegate {
             photoId: photo.id,
             isLike: !photo.isLiked
         ) { [weak self] result in
+            defer { UIBlockingProgressHUD.dismiss() }
+            
             guard let self else { return }
             
             DispatchQueue.main.async {

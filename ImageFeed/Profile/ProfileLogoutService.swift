@@ -25,10 +25,12 @@ final class ProfileLogoutService {
         oauth2TokenStorage.deleteOAuth2Token()
         
         DispatchQueue.main.async {
-            guard let window = UIApplication.shared.windows.first else { return }
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let authVC = storyboard.instantiateViewController(withIdentifier: "AuthViewController")
-            window.rootViewController = SplashViewController()
+            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                  let window = windowScene.windows.first else {
+                return
+            }
+            let splashVC = SplashViewController()
+            window.rootViewController = splashVC
         }
     }
     

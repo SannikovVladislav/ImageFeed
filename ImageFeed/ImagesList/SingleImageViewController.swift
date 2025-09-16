@@ -15,7 +15,7 @@ final class SingleImageViewController: UIViewController {
     @IBAction private func didTapBackButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
-    @IBAction func didTapShareButton(_ sender: UIButton) {
+    @IBAction private func didTapShareButton(_ sender: UIButton) {
         guard let image else { return }
         let share = UIActivityViewController(
             activityItems: [image],
@@ -41,13 +41,13 @@ final class SingleImageViewController: UIViewController {
         scrollView.maximumZoomScale = 1.25
         
         if let image = image {
-                    singleImageView.image = image
-                    singleImageView.frame.size = image.size
-                    scrollView.contentSize = image.size
-                    rescaleAndCenterImageInScrollView(image: image)
-                } else {
-                    loadImage()
-                }
+            singleImageView.image = image
+            singleImageView.frame.size = image.size
+            scrollView.contentSize = image.size
+            rescaleAndCenterImageInScrollView(image: image)
+        } else {
+            loadImage()
+        }
     }
     
     
@@ -72,25 +72,25 @@ final class SingleImageViewController: UIViewController {
     }
     
     private func showError() {
-            let alert = UIAlertController(
-                title: "Ошибка",
-                message: "Что-то пошло не так. Попробовать ещё раз?",
-                preferredStyle: .alert
-            )
-            
-            alert.addAction(UIAlertAction(title: "Не надо", style: .default))
-            alert.addAction(UIAlertAction(title: "Повторить", style: .default) { [weak self] _ in
-                self?.loadImage()
-            })
-            
-            present(alert, animated: true)
-        }
+        let alert = UIAlertController(
+            title: "Ошибка",
+            message: "Что-то пошло не так. Попробовать ещё раз?",
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(title: "Не надо", style: .default))
+        alert.addAction(UIAlertAction(title: "Повторить", style: .default) { [weak self] _ in
+            self?.loadImage()
+        })
+        
+        present(alert, animated: true)
+    }
     
     private func rescaleAndCenterImageInScrollView(image: UIImage) {
         let minZoomScale = scrollView.minimumZoomScale
         let maxZoomScale = scrollView.maximumZoomScale
         
-       // view.layoutIfNeeded()
+        // view.layoutIfNeeded()
         
         let visibleRectSize = scrollView.bounds.size
         let imageSize = image.size
