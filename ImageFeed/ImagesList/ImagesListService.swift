@@ -7,6 +7,13 @@
 
 import Foundation
 
+protocol ImagesListServiceProtocol {
+    var photos: [Photo] { get }
+    func fetchPhotosNextPage()
+    func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<Void, Error>) -> Void)
+    func deleteImageList()
+}
+
 enum ImagesListServiceError: Error {
     case invalidRequest
     case invalidToken
@@ -20,7 +27,7 @@ enum HTTPMethod: String {
     case delete = "DELETE"
 }
 
-final class ImagesListService {
+final class ImagesListService: ImagesListServiceProtocol {
     private(set) var photos: [Photo] = []
     static let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
     static let shared = ImagesListService()

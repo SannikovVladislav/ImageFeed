@@ -62,7 +62,7 @@ final class WebViewViewController: UIViewController & WebViewViewControllerProto
     func setProgressHidden(_ isHidden: Bool) {
         progressView.isHidden = isHidden
     }
-        
+    
     private func configureBackButton() {
         navigationItem.hidesBackButton = true
         let backButton = UIButton(type: .system)
