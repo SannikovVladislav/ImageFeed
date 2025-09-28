@@ -59,11 +59,12 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
         button.tintColor = .ypRedIOS
         button.addTarget(self, action: #selector(didTapLogoutButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.accessibilityIdentifier = "logout button"
         return button
     }()
     
     private let presenter: ProfileViewPresenterProtocol
-    //private var profileImageServiceObserver: NSObjectProtocol?
+
     let profileLogoutService = ProfileLogoutService.shared
     
     init(presenter: ProfileViewPresenterProtocol) {
@@ -80,11 +81,6 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
         presenter.view = self
         presenter.viewDidLoad()
         presenter.setupObservers()
-       
-        //setupUI()
-       // setupObservers()
-       // configureAppearance()
-        //loadProfileData()
     }
     
     @objc private func didTapLogoutButton() {
@@ -94,18 +90,7 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
     func configureViews() {
         view.backgroundColor = UIColor(resource: .ypBlackIOS)
         setupUI()
-       // setupConstraints()
         configureAppearance()
-    }
-    
-    private func configureAppearance() {
-        if #available(iOS 15.0, *) {
-            let appearance = UITabBarAppearance()
-            appearance.configureWithOpaqueBackground()
-            appearance.backgroundColor = UIColor(resource: .ypBlackIOS)
-            tabBarController?.tabBar.standardAppearance = appearance
-            tabBarController?.tabBar.scrollEdgeAppearance = appearance
-        }
     }
     
     func showDefaultProfile() {
@@ -157,6 +142,16 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
         present(alert, animated: true)
     }
     
+    private func configureAppearance() {
+        if #available(iOS 15.0, *) {
+            let appearance = UITabBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = UIColor(resource: .ypBlackIOS)
+            tabBarController?.tabBar.standardAppearance = appearance
+            tabBarController?.tabBar.scrollEdgeAppearance = appearance
+        }
+    }
+    
     private func setupUI() {
         view.backgroundColor = .ypBlackIOS
         [profilePhotoImageView, nameLabel, loginNameLabel, descriptionLabel, logoutButton].forEach {
@@ -164,33 +159,33 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
         }
         setupConstraints()
     }
-        
+    
     private func setupConstraints() {
-            NSLayoutConstraint.activate([
-                // Profile Photo
-                profilePhotoImageView.widthAnchor.constraint(equalToConstant: 70),
-                profilePhotoImageView.heightAnchor.constraint(equalToConstant: 70),
-                profilePhotoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant:32),
-                profilePhotoImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-                
-                // Name Label
-                nameLabel.leadingAnchor.constraint(equalTo: profilePhotoImageView.leadingAnchor),
-                nameLabel.topAnchor.constraint(equalTo: profilePhotoImageView.bottomAnchor, constant: 8),
-                
-                //Login Name
-                loginNameLabel.leadingAnchor.constraint(equalTo: profilePhotoImageView.leadingAnchor),
-                loginNameLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
-                
-                // Description
-                descriptionLabel.leadingAnchor.constraint(equalTo: profilePhotoImageView.leadingAnchor),
-                descriptionLabel.topAnchor.constraint(equalTo: loginNameLabel.bottomAnchor, constant: 8),
-                
-                //Logout Button
-                logoutButton.widthAnchor.constraint(equalToConstant: 44),
-                logoutButton.heightAnchor.constraint(equalToConstant: 44),
-                logoutButton.centerYAnchor.constraint(equalTo: profilePhotoImageView.centerYAnchor),
-                logoutButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
-            ])
-        }
+        NSLayoutConstraint.activate([
+            // Profile Photo
+            profilePhotoImageView.widthAnchor.constraint(equalToConstant: 70),
+            profilePhotoImageView.heightAnchor.constraint(equalToConstant: 70),
+            profilePhotoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant:32),
+            profilePhotoImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            
+            // Name Label
+            nameLabel.leadingAnchor.constraint(equalTo: profilePhotoImageView.leadingAnchor),
+            nameLabel.topAnchor.constraint(equalTo: profilePhotoImageView.bottomAnchor, constant: 8),
+            
+            //Login Name
+            loginNameLabel.leadingAnchor.constraint(equalTo: profilePhotoImageView.leadingAnchor),
+            loginNameLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
+            
+            // Description
+            descriptionLabel.leadingAnchor.constraint(equalTo: profilePhotoImageView.leadingAnchor),
+            descriptionLabel.topAnchor.constraint(equalTo: loginNameLabel.bottomAnchor, constant: 8),
+            
+            //Logout Button
+            logoutButton.widthAnchor.constraint(equalToConstant: 44),
+            logoutButton.heightAnchor.constraint(equalToConstant: 44),
+            logoutButton.centerYAnchor.constraint(equalTo: profilePhotoImageView.centerYAnchor),
+            logoutButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
+        ])
+    }
 }
 

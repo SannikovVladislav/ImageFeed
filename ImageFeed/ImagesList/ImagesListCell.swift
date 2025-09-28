@@ -54,6 +54,7 @@ final class ImagesListCell: UITableViewCell {
     func setLikeButtonImage(isLiked: Bool) {
         let imageResource: ImageResource = isLiked ? .active : .noActive
         likeButton.setImage(UIImage(resource: imageResource), for: .normal)
+        likeButton.accessibilityIdentifier = isLiked ? "like_button_on" : "like_button_off"
     }
     
     func setupGradient() {

@@ -10,11 +10,11 @@ import Foundation
 protocol ProfileViewPresenterProtocol: AnyObject {
     var view: ProfileViewControllerProtocol? { get set }
     func viewDidLoad()
-    func didTapLogout()
+    func setupObservers()
     func confirmLogout()
+    func didTapLogout()
     func updateProfile()
     func updateAvatar()
-    func setupObservers()
 }
 
 final class ProfileViewPresenter: ProfileViewPresenterProtocol {
@@ -39,20 +39,20 @@ final class ProfileViewPresenter: ProfileViewPresenterProtocol {
     }
     
     func setupObservers() {
-            profileImageServiceObserver = NotificationCenter.default
-                .addObserver(
-                    forName: ProfileImageService.didChangeNotification,
-                    object: nil,
-                    queue: .main
-                ) { [weak self] _ in
-                    guard let self = self else { return }
-                    self.updateAvatar()
-                }
-        }
+        profileImageServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ProfileImageService.didChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateAvatar()
+            }
+    }
     
     func confirmLogout() {
-            profileLogoutService.logout()
-        }
+        profileLogoutService.logout()
+    }
     
     func didTapLogout() {
         view?.showLogoutConfiguration()
@@ -69,7 +69,7 @@ final class ProfileViewPresenter: ProfileViewPresenterProtocol {
     
     func updateAvatar() {
         guard let urlString = profileImageService.avatarURL,
-        let url = URL(string: urlString) else {
+              let url = URL(string: urlString) else {
             view?.setAvatar(url: nil)
             return
         }
