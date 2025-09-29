@@ -50,7 +50,6 @@ final class SingleImageViewController: UIViewController {
         }
     }
     
-    
     private func loadImage() {
         guard let imageURL else { return }
         

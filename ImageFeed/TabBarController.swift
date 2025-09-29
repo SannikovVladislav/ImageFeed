@@ -16,12 +16,21 @@ final class TabBarController: UITabBarController {
             withIdentifier: "ImagesListViewController"
         )
         
-        let profileViewController = ProfileViewController()
+        let profileService = ProfileService.shared
+        let profileImageService = ProfileImageService.shared
+        let profileLogoutService = ProfileLogoutService.shared
+        
+        let presenter = ProfileViewPresenter(
+            profileService: profileService,
+            profileImageService: profileImageService,
+            profileLogoutService: profileLogoutService
+        )
+        let profileViewController = ProfileViewController(presenter: presenter)
         profileViewController.tabBarItem = UITabBarItem(
             title: "",
-            image: UIImage(resource: .tabProfileActive),
+            image: UIImage(named:"tab_profile_active"),
             selectedImage: nil
         )
-        viewControllers = [imagesListViewController, profileViewController]
+        self.viewControllers = [imagesListViewController, profileViewController]
     }
 }

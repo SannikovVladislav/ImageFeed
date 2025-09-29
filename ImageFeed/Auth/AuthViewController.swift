@@ -32,8 +32,12 @@ final class AuthViewController: UIViewController {
             return
         }
         
-        webViewVC.delegate = self
+        let authHelper = AuthHelper(configuration: .standard)
+        let presenter = WebViewPresenter(authHelper: authHelper)
+        webViewVC.presenter = presenter
+        presenter.view = webViewVC
         
+        webViewVC.delegate = self
         let navController = UINavigationController(rootViewController: webViewVC)
         navController.modalPresentationStyle = .fullScreen
         present(navController, animated: true)
@@ -55,11 +59,11 @@ extension AuthViewController: WebViewViewControllerDelegate {
         UIBlockingProgressHUD.show()
         
         oauth2Service.fetchOAuthToken(code: code) { [weak self] result in
-            UIBlockingProgressHUD.dismiss()
-            
             guard let self else { return }
             
             DispatchQueue.main.async {
+                UIBlockingProgressHUD.dismiss()
+                
                 switch result {
                 case .success(let token):
                     self.tokenStorage.token = token

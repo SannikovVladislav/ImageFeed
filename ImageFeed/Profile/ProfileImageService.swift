@@ -7,7 +7,13 @@
 
 import Foundation
 
-final class ProfileImageService {
+protocol ProfileImageServiceProtocol: AnyObject {
+    var avatarURL: String? { get }
+    func fetchProfileImageURL(username: String, completion: @escaping (Result<String, Error>) -> Void)
+    func deleteProfileImage()
+}
+
+final class ProfileImageService: ProfileImageServiceProtocol {
     
     static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     
